@@ -15,28 +15,28 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Insightment for skeptics. Clarity, understanding, and growth via transformative thinking." />
 <meta property="og:description" content="Insightment for skeptics. Clarity, understanding, and growth via transformative thinking." />
-<link rel="canonical" href="https://thinkforward.academy/toc/" />
-<meta property="og:url" content="https://thinkforward.academy/toc/" />
+<link rel="canonical" href="http://localhost:4000/toc/" />
+<meta property="og:url" content="http://localhost:4000/toc/" />
 <meta property="og:site_name" content="think→forward" />
-<meta property="og:image" content="https://mugshotbot.com/m?theme=bold&mode=light&color=246e62&pattern=bank_note&hide_watermark=true&url=https://thinkforward.academy/toc/" />
+<meta property="og:image" content="https://mugshotbot.com/m?theme=bold&mode=light&color=246e62&pattern=bank_note&hide_watermark=true&url=http://localhost:4000/toc/" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2026-03-17T03:31:48-07:00" />
+<meta property="article:published_time" content="2026-03-17T03:35:28-07:00" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="twitter:image" content="https://mugshotbot.com/m?theme=bold&mode=light&color=246e62&pattern=bank_note&hide_watermark=true&url=https://thinkforward.academy/toc/" />
+<meta property="twitter:image" content="https://mugshotbot.com/m?theme=bold&mode=light&color=246e62&pattern=bank_note&hide_watermark=true&url=http://localhost:4000/toc/" />
 <meta property="twitter:title" content="Table of Contents" />
 <!-- End Bridgetown SEO tag -->
 
 
-<link rel="alternate" hreflang="en" href="https://thinkforward.academy/toc/" />
-<link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/toc/" />
-<link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/toc/" />
+<link rel="alternate" hreflang="en" href="http://localhost:4000/toc/" />
+<link rel="alternate" hreflang="ru" href="http://localhost:4000/ru/toc/" />
+<link rel="alternate" hreflang="x-default" href="http://localhost:4000/toc/" />
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "think→forward",
-  "url": "https://thinkforward.academy",
+  "url": "http://localhost:4000",
   "description": "Insightment for skeptics. Clarity, understanding, and growth via transformative thinking.",
   "inLanguage": ["en"],
   "author": {
@@ -58,8 +58,62 @@
 <meta name="turbo-cache-control" content="no-preview" />
 <link rel="stylesheet" href="/_bridgetown/static/index.FE4BITVK.css" data-turbo-track="reload" />
 <script src="/_bridgetown/static/index.3EPBNI4Z.js" type="module" data-turbo-track="reload"></script>
-<link type="application/atom+xml" rel="alternate" href="https://thinkforward.academy/feed.xml" title="think→forward" />
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="think→forward" />
+<script type="module">let lastmod = 0
+let reconnectAttempts = 0
+function startLiveReload() {
+  const connection = new EventSource("/_bridgetown/live_reload")
 
+  connection.addEventListener("message", event => {
+    reconnectAttempts = 0
+    if (document.querySelector("#bridgetown-build-error")) document.querySelector("#bridgetown-build-error").close()
+    if (event.data == "reloaded!") {
+      location.reload()
+    } else {
+      const newmod = Number(event.data)
+      if (lastmod > 0 && newmod > 0 && lastmod < newmod) {
+        location.reload()
+      } else {
+        lastmod = newmod
+      }
+    }
+  })
+
+  connection.addEventListener("builderror", event => {
+    let dialog = document.querySelector("#bridgetown-build-error")
+    if (!dialog) {
+      dialog = document.createElement("dialog")
+      dialog.id = "bridgetown-build-error"
+      dialog.style.borderColor = "red"
+      dialog.style.fontSize = "110%"
+      dialog.innerHTML = `
+        <p style="color:red">There was an error when building the site:</p>
+        <output><pre></pre></output>
+        <p><small>Check your Bridgetown logs for further details.</small></p>
+      `
+      document.body.appendChild(dialog)
+      dialog.showModal()
+    }
+    dialog.querySelector("pre").textContent = JSON.parse(event.data)
+  })
+
+  connection.addEventListener("error", () => {
+    if (connection.readyState === 2) {
+      // reconnect with new object
+      connection.close()
+      reconnectAttempts++
+      if (reconnectAttempts < 25) {
+        console.warn("Live reload: attempting to reconnect in 3 seconds...")
+        setTimeout(() => startLiveReload(), 3000)
+      } else {
+        console.error("Too many live reload connections failed. Refresh the page to try again.")
+      }
+    }
+  })
+}
+
+startLiveReload()
+</script>
 
 </head>
 <body class="page ">
