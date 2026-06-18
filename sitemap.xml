@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-  <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -12,117 +11,314 @@
     http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd">
 
         <url>
-          <loc>http://localhost:4000/music/</loc>
+          <loc>https://thinkforward.academy/music/</loc>
 
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/music/" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/music/" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/music/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/music/" />
 
           <lastmod>2023-09-27T23:37:03-07:00</lastmod>
 
 
         </url>
         <url>
-          <loc>http://localhost:4000/music/northern-exposure/</loc>
+          <loc>https://thinkforward.academy/music/northern-exposure/</loc>
 
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/music/northern-exposure/" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/music/northern-exposure/" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/music/northern-exposure/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/music/northern-exposure/" />
 
           <lastmod>2023-09-27T08:42:53-07:00</lastmod>
 
 
         </url>
         <url>
-          <loc>http://localhost:4000/books/alan-watts-the-book-ru/</loc>
+          <loc>https://thinkforward.academy/books/alan-watts-the-book-ru/</loc>
 
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/books/alan-watts-the-book-ru/" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/books/alan-watts-the-book-ru/" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/alan-watts-the-book-ru/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/alan-watts-the-book-ru/" />
 
           <lastmod>2026-02-20T17:45:08-08:00</lastmod>
 
 
         </url>
         <url>
-          <loc>http://localhost:4000/books/alan-watts-the-book/</loc>
+          <loc>https://thinkforward.academy/books/alan-watts-the-book/</loc>
 
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/books/alan-watts-the-book/" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/books/alan-watts-the-book/" />
-
-          <lastmod>2023-11-05T17:51:44-08:00</lastmod>
-
-
-        </url>
-        <url>
-          <loc>http://localhost:4000/books/</loc>
-
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/books/" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/books/" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/alan-watts-the-book/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/alan-watts-the-book/" />
 
           <lastmod>2023-11-05T17:51:44-08:00</lastmod>
 
 
         </url>
         <url>
-          <loc>http://localhost:4000/404</loc>
+          <loc>https://thinkforward.academy/books/art-of-loving/</loc>
 
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/404" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/404" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/art-of-loving/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/art-of-loving/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/art-of-loving/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/bare-minimum-parenting/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/bare-minimum-parenting/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/bare-minimum-parenting/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/bare-minimum-parenting/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/everything-is-fucked/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/everything-is-fucked/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/everything-is-fucked/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/everything-is-fucked/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/five-love-languages/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/five-love-languages/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/five-love-languages/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/five-love-languages/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/flow/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/flow/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/flow/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/flow/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/free-will/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/free-will/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/free-will/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/free-will/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/games-people-play/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/games-people-play/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/games-people-play/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/games-people-play/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/how-i-found-freedom/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/how-i-found-freedom/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/how-i-found-freedom/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/how-i-found-freedom/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/how-to-live/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/how-to-live/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/how-to-live/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/how-to-live/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/" />
+
+          <lastmod>2023-11-05T17:51:44-08:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/lying/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/lying/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/lying/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/lying/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/maps-of-meaning/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/maps-of-meaning/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/maps-of-meaning/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/maps-of-meaning/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/meditations/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/meditations/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/meditations/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/meditations/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/psychology-of-money/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/psychology-of-money/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/psychology-of-money/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/psychology-of-money/" />
+
+          <lastmod>2026-06-16T21:40:41-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/the-four-agreements/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/the-four-agreements/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/the-four-agreements/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/the-four-agreements/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/the-second-mountain/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/the-second-mountain/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/the-second-mountain/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/the-second-mountain/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/think-straight/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/think-straight/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/think-straight/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/think-straight/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/thinking-fast-and-slow/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/thinking-fast-and-slow/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/thinking-fast-and-slow/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/thinking-fast-and-slow/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/books/why-buddhism-is-true/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/why-buddhism-is-true/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/why-buddhism-is-true/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/why-buddhism-is-true/" />
+
+          <lastmod>2026-06-16T21:50:30-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/404</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/404" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/404" />
 
           <lastmod>2023-09-27T08:42:53-07:00</lastmod>
 
 
         </url>
         <url>
-          <loc>http://localhost:4000/500</loc>
+          <loc>https://thinkforward.academy/500</loc>
 
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/500" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/500" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/500" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/500" />
 
           <lastmod>2023-09-27T08:42:53-07:00</lastmod>
 
 
         </url>
         <url>
-          <loc>http://localhost:4000/8-ball/</loc>
+          <loc>https://thinkforward.academy/8-ball/</loc>
 
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/8-ball/" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/8-ball/" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/8-ball/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/8-ball/" />
 
           <lastmod>2023-11-06T08:53:55-08:00</lastmod>
 
 
         </url>
         <url>
-          <loc>http://localhost:4000/bridgetown_quick_search/index.json</loc>
+          <loc>https://thinkforward.academy/trip/</loc>
 
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/" />
-              <xhtml:link rel="alternate" hreflang="ru" href="http://localhost:4000/ru/" />
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/bridgetown_quick_search/index.json" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/bridgetown_quick_search/index.json" />
-
-          <lastmod>2026-02-20T06:47:30-08:00</lastmod>
-
-
-        </url>
-        <url>
-          <loc>http://localhost:4000/trip/</loc>
-
-              <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:4000/trip/" />
-              <xhtml:link rel="alternate" hreflang="en" href="http://localhost:4000/trip/" />
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/trip/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/trip/" />
 
           <lastmod>2026-02-20T06:05:48-08:00</lastmod>
 
 
         </url>
+        <url>
+          <loc>https://thinkforward.academy/bridgetown_quick_search/index.json</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
+
+          <lastmod>2026-06-18T03:48:05-07:00</lastmod>
+
+
+        </url>
+
 
 
 
     <url>
-      <loc>http://localhost:4000/downloads/Joy.pdf</loc>
-      <lastmod>2023-09-27T07:44:22-07:00</lastmod>
+      <loc>https://thinkforward.academy/downloads/Joy.pdf</loc>
+      <lastmod>2026-05-27T21:03:29-07:00</lastmod>
     </url>
     <url>
-      <loc>http://localhost:4000/presentation/index.html</loc>
-      <lastmod>2023-09-27T07:44:22-07:00</lastmod>
+      <loc>https://thinkforward.academy/presentation/index.html</loc>
+      <lastmod>2026-05-27T21:03:30-07:00</lastmod>
     </url>
 
 </urlset>
