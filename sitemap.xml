@@ -31,6 +31,17 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/books/12-rules-for-life/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/12-rules-for-life/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/books/12-rules-for-life/" />
+              <xhtml:link rel="alternate" hreflang="ru" href="https://thinkforward.academy/ru/books/12-rules-for-life/" />
+
+          <lastmod>2026-07-06T01:36:58-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/books/alan-watts-the-book-ru/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/books/alan-watts-the-book-ru/" />
@@ -304,7 +315,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-06-22T01:52:16-07:00</lastmod>
+          <lastmod>2026-07-06T23:37:17-07:00</lastmod>
 
 
         </url>
