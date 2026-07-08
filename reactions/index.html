@@ -1,0 +1,641 @@
+<meta charset="utf-8">
+<title>Диапазон реакций — ты в центре</title>
+<!--
+=============================================================================
+MENTAL MODEL — "Шкала в центре ЕСТЬ ты; реакция окрашивает событие"
+=============================================================================
+The VERTICAL rainbow scale stands in the horizontal CENTRE of the screen and
+IS the person. There is NO separate avatar, no orb, no "ты" marker — the scale
+itself is you. 0% (bottom) to 100% (top), fear/dark → love/light. Labels:
+  Страх · Апатия · Тревога · Скука · Спокойствие · Интерес · Радость · Любовь.
+
+THE FLOW (right → scale → left):
+  1. GREY events arrive from the RIGHT at some level L, flying LEFT. They carry
+     NO colour of their own — raw reality, unjudged.
+  2. They hit the scale (you) at their level L.
+  3. On impact each event EXITS to the LEFT, now COLOURED, and flies to the
+     rainbow scale to LAND with emission rays at its reaction level.
+
+DEFAULT REACTION = MIRROR THE EVENT. With NO clicking, a grey event arriving at
+level L exits coloured at ~the SAME level L — your reaction matches the event.
+So untouched, reactions simply echo events at their own levels, and the
+reaction range reflects the natural spread of incoming events.
+
+CLICKING SHIFTS YOUR RANGE, WHICH THEN DISPLACES REACTIONS. A click nudges your
+REACTION RANGE (диапазон реакций) up or down. The more you have clicked (a
+"displacement" weight that rises with clicks and decays when idle), the more a
+reaction is pulled toward a level drawn from WITHIN your shifted range instead
+of mirroring the event. Click high and a LOW grey event starts exiting HIGHER
+than it came in (you respond above the event); click low and it exits lower.
+The further your range sits from the event, the more the reaction is displaced.
+  reactionLevel = lerp(eventLevel, rangeSample, displacement)
+
+YOUR REACTION RANGE = a translucent band on the centred scale with three
+tracked levels средний-верх / среднее / средний-низ. It is DERIVED (smoothed)
+from the recent stream of EXITING reactions — your reactions ARE your range —
+and NUDGED by clicks. Smoothing is gradual/lagging (~0.8/s), viscous. Default
+placement is lower-middle (roughly 0–70%) with a MODERATE spread. Idle: grey
+events keep arriving and mirroring out, the range holds steady, records nicely.
+
+Deterministic where it matters (seeded PRNG for sampling/stars, single
+performance.now clock). ONE self-contained file, inline CSS/JS, no external deps.
+=============================================================================
+-->
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: #05060a; overflow: hidden;
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  #stage { position: fixed; inset: 0; display: grid; place-items: center; }
+  canvas { display: block; cursor: crosshair; touch-action: none; }
+</style>
+<div id="stage"><canvas id="c"></canvas></div>
+<script>
+(() => {
+  "use strict";
+
+  const BASE_W = 1920, BASE_H = 1080;
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+
+  // ---- responsive sizing (keeps 16:9, crisp on HiDPI) ----------------------
+  let dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const s = Math.min(window.innerWidth / BASE_W, window.innerHeight / BASE_H);
+    canvas.style.width = (BASE_W * s) + "px";
+    canvas.style.height = (BASE_H * s) + "px";
+    canvas.width = Math.round(BASE_W * s * dpr);
+    canvas.height = Math.round(BASE_H * s * dpr);
+    ctx.setTransform(s * dpr, 0, 0, s * dpr, 0, 0); // draw in BASE coordinates
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  // ---- geometry ------------------------------------------------------------
+  // The rainbow scale stands in the CENTRE and IS the person. y grows downward,
+  // so level 1.0 (love) = top, level 0.0 (fear) = bottom.
+  const SCALE_W = 70;                       // rainbow width
+  const SCALE_X = Math.round(BASE_W / 2 - SCALE_W / 2); // centred left edge
+  const HIT_X = SCALE_X + SCALE_W;          // right edge — where grey events hit
+  const LAND_X = SCALE_X;                   // left edge — where reactions land
+  const TOP_Y = 90;                         // y for level = 1.0
+  const BOT_Y = BASE_H - 90;                // y for level = 0.0
+  const RIGHT_X = BASE_W + 80;              // grey events spawn off the right edge
+
+  const levelToY = (lv) => BOT_Y + (TOP_Y - BOT_Y) * lv;
+  const yToLevel = (y) => (y - BOT_Y) / (TOP_Y - BOT_Y);
+
+  // ---- rainbow colour ramp (fear→love) ------------------------------------
+  const RAMP = [
+    [0.00, [ 40,  20,  70]],  // Страх — dark violet
+    [0.14, [ 60,  30, 130]],  // Тревога — indigo
+    [0.28, [ 40,  90, 200]],  // Апатия — blue
+    [0.42, [ 30, 170, 190]],  // Скука — teal
+    [0.56, [ 40, 200, 120]],  // Спокойствие — green
+    [0.70, [200, 210,  60]],  // Интерес — yellow-green
+    [0.84, [255, 150,  50]],  // Радость — orange
+    [1.00, [255, 100, 160]],  // Любовь — warm pink/gold
+  ];
+  function rampColor(lv) {
+    lv = Math.max(0, Math.min(1, lv));
+    for (let i = 1; i < RAMP.length; i++) {
+      if (lv <= RAMP[i][0]) {
+        const a = RAMP[i - 1], b = RAMP[i];
+        const t = (lv - a[0]) / (b[0] - a[0]);
+        return [
+          Math.round(a[1][0] + (b[1][0] - a[1][0]) * t),
+          Math.round(a[1][1] + (b[1][1] - a[1][1]) * t),
+          Math.round(a[1][2] + (b[1][2] - a[1][2]) * t),
+        ];
+      }
+    }
+    return RAMP[RAMP.length - 1][1].slice();
+  }
+  const rgb = (c, a) => a == null
+    ? `rgb(${c[0]},${c[1]},${c[2]})`
+    : `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  const GREY = [150, 158, 172]; // neutral raw-event colour
+
+  // ---- labels along the scale ---------------------------------------------
+  const LABELS = [
+    { lv: 0.03, t: "Страх" },
+    { lv: 0.17, t: "Тревога" },
+    { lv: 0.31, t: "Апатия" },
+    { lv: 0.45, t: "Скука" },
+    { lv: 0.59, t: "Спокойствие" },
+    { lv: 0.73, t: "Интерес" },
+    { lv: 0.87, t: "Радость" },
+    { lv: 0.98, t: "Любовь" },
+  ];
+
+  // ---- deterministic PRNG (mulberry32) ------------------------------------
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const rnd = mulberry32(20260708);
+  // bell-ish sample in [-1,1], biased toward the centre (avg of two uniforms)
+  const bell = () => (rnd() + rnd() - 1);
+
+  // ---- YOUR REACTION RANGE (the follower band) -----------------------------
+  // Default: lower-middle of the scale, moderate spread. This is what we DRAW.
+  const band = { center: 0.40, half: 0.24, top: 0.64, bot: 0.16 };
+  // A separate "pull" target the user nudges via clicks; the band's mean is a
+  // blend of this pull and the recent exiting reactions → feedback the clicks
+  // steer.
+  let pullCenter = 0.40;
+
+  // ---- timing --------------------------------------------------------------
+  const IN_MS = 4200;      // grey travel: right → scale (you)
+  const OUT_MS = 3600;     // coloured travel: scale → left
+  // clockNow reads the manual sim clock; it is reassigned once the main loop's
+  // simTime exists (below). Until then it returns 0.
+  let clockNow = () => 0;
+
+  // displacement weight: 0 = reactions MIRROR the event's own level (default,
+  // untouched); →1 = reactions are drawn entirely from the shifted range,
+  // ignoring the event. Rises with clicks, decays back to 0 when idle.
+  let displacement = 0;
+
+  // ---- events (FIXED-SIZE OBJECT POOL) -------------------------------------
+  // Each grey event enters at its OWN level evLv (raw reality). phase:
+  //   "in" (grey, right→scale) | "out" (coloured, scale→left) | "land"
+  // Particles are pre-allocated ONCE and REUSED — no per-spawn allocation, no
+  // per-frame splice, no GC churn, hard ceiling of POOL by construction. A slot
+  // with active=false is free; spawnGrey reuses a free slot (or recycles the
+  // oldest if the pool is momentarily full). Nothing can make this list grow.
+  const POOL = 28;               // fixed pool size — plenty for on-screen density
+  const events = Array.from({ length: POOL }, () => ({
+    active: false, born: 0, phase: "in", evLv: 0, lv: 0,
+    size: 0, wobble: 0, wobbleAmp: 0, speed: 1, landT: 0,
+  }));
+  const DEFAULT_CENTER = 0.40;
+
+  function spawnGrey(now) {
+    // find a free slot; if none, recycle the OLDEST active one (smallest born)
+    let slot = null, oldest = null;
+    for (const e of events) {
+      if (!e.active) { slot = e; break; }
+      if (oldest === null || e.born < oldest.born) oldest = e;
+    }
+    if (slot === null) slot = oldest;   // pool full → overwrite oldest particle
+    // raw incoming events cluster around the CURRENT reaction range — reality
+    // mostly arrives at the level you're living on; spread a bit past the band.
+    const evLv = Math.max(0.04, Math.min(0.96, band.center + bell() * (band.half + 0.10)));
+    slot.active = true;
+    slot.born = now;
+    slot.phase = "in";
+    slot.evLv = evLv;
+    slot.lv = evLv;                     // reaction level, resolved on impact
+    slot.size = 5.5 + rnd() * 4.5;
+    slot.wobble = rnd() * Math.PI * 2;
+    slot.wobbleAmp = 0.5 + rnd() * 0.7;
+    slot.speed = 0.9 + rnd() * 0.22;
+    slot.landT = 0;
+  }
+
+  // reaction level for an event: MIRROR its own level by default, and displace
+  // toward a sample from the shifted range as `displacement` rises with clicks.
+  function reactionFor(evLv) {
+    const rangeSample = band.center + bell() * band.half * 0.85;
+    const lv = evLv + (rangeSample - evLv) * displacement;
+    return Math.max(0.02, Math.min(0.99, lv));
+  }
+
+  // recent exiting reactions → drives the band (feedback). Sliding window.
+  const recent = [];         // {lv, t}
+  const RECENT_MS = 5200;
+
+  // ---- grey-event arrival cadence -----------------------------------------
+  const ARRIVE_EVERY = 620;  // ms between grey events
+  let nextArrive = 0;
+
+  // ---- interaction ---------------------------------------------------------
+  let lastClick = -1e9;
+  let hintFaded = false;
+  let dragging = false;
+
+  function canvasYToLevel(clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const y = (clientY - rect.top) / rect.height * BASE_H;
+    return Math.max(0.02, Math.min(0.99, yToLevel(y)));
+  }
+  function nudge(clientY, now) {
+    const target = canvasYToLevel(clientY);
+    // a click PULLS the whole range toward that level (a hint, not a paint)…
+    pullCenter += (target - pullCenter) * 0.55;
+    pullCenter = Math.max(0.08, Math.min(0.95, pullCenter));
+    // …and raises the displacement weight, so reactions stop mirroring the
+    // event and start being drawn from the shifted range.
+    displacement = Math.min(1, displacement + 0.28);
+    lastClick = now;
+    hintFaded = true;
+  }
+  canvas.addEventListener("pointerdown", (e) => {
+    dragging = true; nudge(e.clientY, clockNow());
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove", (e) => { if (dragging) nudge(e.clientY, clockNow()); });
+  const endDrag = () => { dragging = false; };
+  canvas.addEventListener("pointerup", endDrag);
+  canvas.addEventListener("pointercancel", endDrag);
+
+  // ---- update the band each frame (smoothed, frame-rate-independent) -------
+  function updateBand(now, dt) {
+    // prune recent reactions outside the time window, plus a hard length cap
+    while (recent.length && now - recent[0].t > RECENT_MS) recent.shift();
+    if (recent.length > MAX_RECENT) recent.splice(0, recent.length - MAX_RECENT);
+
+    // recent-reactions mean & spread (the reactions ARE the range)
+    let rMean = band.center, rHalf = band.half;
+    if (recent.length >= 2) {
+      let s = 0, s2 = 0;
+      for (const r of recent) { s += r.lv; s2 += r.lv * r.lv; }
+      rMean = s / recent.length;
+      rHalf = Math.sqrt(Math.max(0, s2 / recent.length - rMean * rMean));
+    }
+    // pull weight: strong right after a click, decaying over ~2s, small floor
+    const pullW = 0.55 * Math.exp(-(now - lastClick) / 1400) + 0.12; // 0.12..0.67
+    const targetCenter = pullCenter * pullW + rMean * (1 - pullW);
+    // spread target: moderate, clamped — never hairline, never whole scale
+    const targetHalf = Math.max(0.18, Math.min(0.32, rHalf * 0.9 + 0.14));
+
+    // slow exponential smoothing → visible lag (~1.25s time-constant)
+    const k = 1 - Math.exp(-0.8 * dt);
+    band.center += (targetCenter - band.center) * k;
+    band.half += (targetHalf - band.half) * k;
+    // hard clamps → the range can never run off-scale or diverge numerically
+    band.center = Math.max(0.06, Math.min(0.94, band.center));
+    band.half = Math.max(0.15, Math.min(0.36, band.half));
+    band.top = Math.min(0.995, band.center + band.half);
+    band.bot = Math.max(0.005, band.center - band.half);
+  }
+
+  // ---- background stars (static, seeded) ----------------------------------
+  const stars = [];
+  {
+    const sr = mulberry32(777);
+    for (let i = 0; i < 140; i++) {
+      stars.push({ x: sr() * BASE_W, y: sr() * BASE_H,
+        r: sr() * 1.4 + 0.2, a: sr() * 0.5 + 0.15, tw: sr() * Math.PI * 2 });
+    }
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  // ---- draw the rainbow scale ---------------------------------------------
+  function drawScale() {
+    const grad = ctx.createLinearGradient(0, BOT_Y, 0, TOP_Y);
+    for (let i = 0; i < RAMP.length; i++) grad.addColorStop(RAMP[i][0], rgb(RAMP[i][1]));
+    ctx.save();
+    ctx.shadowColor = "rgba(255,180,120,0.35)"; ctx.shadowBlur = 40;
+    roundRect(SCALE_X, TOP_Y, SCALE_W, BOT_Y - TOP_Y, 26);
+    ctx.fillStyle = grad; ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    roundRect(SCALE_X, TOP_Y, SCALE_W, BOT_Y - TOP_Y, 26);
+    ctx.lineWidth = 2; ctx.strokeStyle = "rgba(255,255,255,0.18)"; ctx.stroke();
+    ctx.restore();
+
+    ctx.font = "600 20px -apple-system, 'Segoe UI', Arial";
+    ctx.textBaseline = "middle"; ctx.textAlign = "center";
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    ctx.fillText("100%", SCALE_X + SCALE_W / 2, TOP_Y - 26);
+    ctx.fillText("0%", SCALE_X + SCALE_W / 2, BOT_Y + 26);
+
+    ctx.textAlign = "right";
+    ctx.font = "500 24px -apple-system, 'Segoe UI', Arial";
+    for (const L of LABELS) {
+      const y = levelToY(L.lv), c = rampColor(L.lv);
+      ctx.strokeStyle = rgb(c, 0.8); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(SCALE_X - 8, y); ctx.lineTo(SCALE_X - 20, y); ctx.stroke();
+      ctx.fillStyle = rgb(c, 0.95);
+      ctx.shadowColor = rgb(c, 0.5); ctx.shadowBlur = 12;
+      ctx.fillText(L.t, SCALE_X - 30, y);
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // ---- draw YOUR reaction range as a band ON the centred scale (three zones)
+  function drawBand(now) {
+    const yTop = levelToY(band.top), yBot = levelToY(band.bot), yC = levelToY(band.center);
+    // band straddles the centred scale, reaching a little to both sides so it
+    // reads as "this stretch of the scale is your reaction range".
+    const x0 = SCALE_X - 240, x1 = HIT_X + 240;
+    const cBot = rampColor(band.bot), cTop = rampColor(band.top), cC = rampColor(band.center);
+
+    const g = ctx.createLinearGradient(0, yBot, 0, yTop);
+    g.addColorStop(0, rgb(cBot, 0.05));
+    g.addColorStop(0.5, rgb(cC, 0.13));
+    g.addColorStop(1, rgb(cTop, 0.05));
+    ctx.fillStyle = g;
+    ctx.fillRect(x0, yTop, x1 - x0, yBot - yTop);
+
+    for (const [yy, cc] of [[yTop, cTop], [yBot, cBot]]) {
+      ctx.save();
+      ctx.strokeStyle = rgb(cc, 0.5); ctx.shadowColor = rgb(cc, 0.6);
+      ctx.shadowBlur = 14; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x0, yy); ctx.lineTo(x1, yy); ctx.stroke();
+      ctx.restore();
+    }
+
+    ctx.save();
+    ctx.strokeStyle = rgb(cC, 0.4); ctx.shadowColor = rgb(cC, 0.4);
+    ctx.shadowBlur = 10; ctx.lineWidth = 2.5;
+    ctx.setLineDash([32, 34]); ctx.lineDashOffset = (now * 0.09) % 66;
+    ctx.beginPath(); ctx.moveTo(x0, yC); ctx.lineTo(x1, yC); ctx.stroke();
+    ctx.restore();
+
+    // zone labels, placed to the RIGHT of the band so they don't sit over the scale
+    ctx.save();
+    ctx.textAlign = "left";
+    ctx.font = "500 18px -apple-system, 'Segoe UI', Arial";
+    const lx = x1 + 16;
+    ctx.textBaseline = "bottom"; ctx.fillStyle = rgb(cTop, 0.7);
+    ctx.fillText("средний верх", lx, yTop - 6);
+    ctx.textBaseline = "middle"; ctx.fillStyle = rgb(cC, 0.72);
+    ctx.fillText("среднее", lx, yC);
+    ctx.textBaseline = "top"; ctx.fillStyle = rgb(cBot, 0.7);
+    ctx.fillText("средний низ", lx, yBot + 6);
+    ctx.textBaseline = "bottom"; ctx.font = "600 19px -apple-system, 'Segoe UI', Arial";
+    ctx.fillStyle = "rgba(255,255,255,0.4)";
+    ctx.fillText("диапазон реакций", lx, yTop - 30);
+    ctx.restore();
+  }
+
+  // (the centred rainbow scale itself IS the person — no separate avatar/orb)
+
+  // ---- draw + advance a single event --------------------------------------
+  const LEFT_EXIT_X = -80; // coloured reactions fly off the left edge
+  function drawEvent(ev, now) {
+    if (!ev.active) return;   // pooled-but-free slot — skip
+    if (ev.phase === "in") {
+      // grey event, right edge → scale's right edge, at its OWN level evLv
+      const p = Math.min(1, (now - ev.born) / (IN_MS * ev.speed));
+      const x = RIGHT_X + (HIT_X - RIGHT_X) * p;
+      const y = levelToY(ev.evLv);
+      const pulse = 1 + 0.22 * Math.sin(now * 0.006 + ev.wobble) * ev.wobbleAmp;
+      const r = ev.size * pulse;
+
+      if (p >= 1) {
+        // IMPACT on the scale (you): resolve the reaction level — MIRROR the
+        // event by default, displaced toward the shifted range as clicks rise.
+        // Record it (feeds the band) and emerge as a coloured reaction that
+        // lands at the scale's LEFT edge, then flies left.
+        ev.phase = "land"; ev.born = now;
+        ev.lv = reactionFor(ev.evLv);
+        recent.push({ lv: ev.lv, t: now });
+        return;
+      }
+
+      // grey comet tail (points back to the right, where it came from)
+      ctx.save();
+      const tail = 40 + r * 2;
+      const tg = ctx.createLinearGradient(x, y, x + tail, y);
+      tg.addColorStop(0, rgb(GREY, 0.45)); tg.addColorStop(1, rgb(GREY, 0));
+      ctx.strokeStyle = tg; ctx.lineWidth = r * 0.8; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + tail, y); ctx.stroke();
+      ctx.restore();
+
+      ctx.save();
+      ctx.shadowColor = rgb(GREY, 0.7); ctx.shadowBlur = 14;
+      const rg = ctx.createRadialGradient(x, y, 0, x, y, r * 1.5);
+      rg.addColorStop(0, "rgba(230,234,242,0.9)");
+      rg.addColorStop(0.4, rgb(GREY, 0.85));
+      rg.addColorStop(1, rgb(GREY, 0));
+      ctx.fillStyle = rg;
+      ctx.beginPath(); ctx.arc(x, y, r * 1.5, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+      return;
+    }
+
+    // coloured reaction: born at the scale's LEFT edge (LAND_X) at its reaction
+    // level. First "land" (emission rays at the scale), then fly LEFT and fade.
+    const c = rampColor(ev.lv);
+    const y = levelToY(ev.lv);
+
+    if (ev.phase === "land") {
+      const l = (now - ev.born) / 700; // landing-rays lifetime (0→1)
+      if (l >= 1) { ev.phase = "out"; ev.born = now; return; }
+      const fade = 1 - l;
+      ctx.save();
+      ctx.strokeStyle = rgb(c, 0.85 * fade); ctx.lineWidth = 2;
+      ctx.shadowColor = rgb(c, fade); ctx.shadowBlur = 16;
+      const rays = 9;
+      for (let i = 0; i < rays; i++) {
+        const ang = (i / rays) * Math.PI * 2 + now * 0.002;
+        const len = 10 + l * 34;
+        ctx.beginPath(); ctx.moveTo(LAND_X, y);
+        ctx.lineTo(LAND_X + Math.cos(ang) * len, y + Math.sin(ang) * len); ctx.stroke();
+      }
+      const pulse = 1 + 0.3 * Math.sin(now * 0.006 + ev.wobble) * ev.wobbleAmp;
+      const rr = ev.size * pulse;
+      ctx.save();
+      ctx.shadowColor = rgb(c, 0.9); ctx.shadowBlur = 22;
+      const rg = ctx.createRadialGradient(LAND_X, y, 0, LAND_X, y, rr * 1.6);
+      rg.addColorStop(0, "rgba(255,255,255,0.95)");
+      rg.addColorStop(0.35, rgb(c, 0.95)); rg.addColorStop(1, rgb(c, 0));
+      ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(LAND_X, y, rr * 1.6, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+      ctx.restore();
+      return;
+    }
+
+    // "out": coloured reaction flies LEFT away from the scale, then fades out
+    const p = Math.min(1, (now - ev.born) / (OUT_MS * ev.speed));
+    const x = LAND_X + (LEFT_EXIT_X - LAND_X) * p;
+    if (p >= 1) { ev.active = false; return; } // return the slot to the pool
+    const fadeOut = Math.max(0, 1 - Math.max(0, (p - 0.6) / 0.4)); // fade last 40%
+    const pulse = 1 + 0.35 * Math.sin(now * 0.006 + ev.wobble) * ev.wobbleAmp;
+    const r = ev.size * pulse;
+
+    // tail points back toward the scale (to the right)
+    ctx.save();
+    const tail = 46 + r * 2;
+    const tg = ctx.createLinearGradient(x, y, x + tail, y);
+    tg.addColorStop(0, rgb(c, 0.55 * fadeOut)); tg.addColorStop(1, rgb(c, 0));
+    ctx.strokeStyle = tg; ctx.lineWidth = r * 0.9; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + tail, y); ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.globalAlpha = fadeOut;
+    ctx.shadowColor = rgb(c, 0.9); ctx.shadowBlur = 22;
+    const rg = ctx.createRadialGradient(x, y, 0, x, y, r * 1.6);
+    rg.addColorStop(0, "rgba(255,255,255,0.95)");
+    rg.addColorStop(0.35, rgb(c, 0.95));
+    rg.addColorStop(1, rgb(c, 0));
+    ctx.fillStyle = rg;
+    ctx.beginPath(); ctx.arc(x, y, r * 1.6, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  // ---- HUD -----------------------------------------------------------------
+  function drawHUD() {
+    ctx.save();
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.fillStyle = "rgba(255,255,255,0.9)";
+    ctx.font = "700 34px -apple-system, 'Segoe UI', Arial";
+    ctx.fillText("Диапазон реакций", 40, 34);
+    ctx.font = "400 20px -apple-system, 'Segoe UI', Arial";
+    ctx.fillStyle = "rgba(255,255,255,0.45)";
+    ctx.fillText("сдвигай диапазон вверх — реакции окрашиваются теплее, к радости и любви", 40, 78);
+
+    const c = rampColor(band.center);
+    ctx.textAlign = "right"; ctx.font = "500 20px -apple-system, 'Segoe UI', Arial";
+    ctx.fillStyle = rgb(c, 0.85);
+    ctx.fillText(`диапазон ~${Math.round(band.half * 200)}%  ·  среднее ${Math.round(band.center * 100)}%`,
+                 BASE_W - 30, BASE_H - 46);
+    ctx.restore();
+  }
+
+  function drawHint(now) {
+    let alpha;
+    if (!hintFaded) alpha = 0.6 * Math.min(1, now / 900);
+    else { alpha = Math.max(0, 0.6 * (1 - (now - lastClick) / 1200)); if (alpha <= 0.001) return; }
+    ctx.save();
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.font = "500 25px -apple-system, 'Segoe UI', Arial";
+    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+    ctx.shadowColor = "rgba(0,0,0,0.6)"; ctx.shadowBlur = 12;
+    ctx.fillText("серые события летят в тебя; кликай — сдвигай диапазон реакций, что выходит налево красишь ты",
+                 BASE_W / 2, BASE_H - 110);
+    ctx.restore();
+  }
+
+  // ---- main loop -----------------------------------------------------------
+  // Stability: `t` is a MANUAL clock advanced by CLAMPED dt each frame, NOT
+  // raw (now - clockOffset). A long stall (backgrounded tab, RAF throttle, GC
+  // pause) can therefore never inject a huge time jump that would flood the
+  // spawn loop. clockNow() mirrors this manual clock for click timestamps.
+  const MAX_DT = 0.10;          // seconds — hard cap on any single frame's dt
+  const MAX_RECENT = 300;       // hard cap on the recent-reactions buffer
+  const MAX_SPAWN_PER_FRAME = 4; // (events are a fixed pool; this just bounds work)
+  let simTime = 0;              // manual clock (ms) — the ONLY time the sim sees
+  let lastNow = null;
+  let rafId = null;
+  let manualStep = false;      // when true, frame() does not reschedule itself
+
+  function frame(now) {
+    if (lastNow === null) lastNow = now;
+    let dt = Math.min((now - lastNow) / 1000, MAX_DT); // CLAMP dt (≤100ms)
+    lastNow = now;
+    if (!(dt > 0)) dt = 0.016;
+    simTime += dt * 1000;       // advance manual clock by clamped dt
+    const t = simTime;
+
+    // background
+    const bg = ctx.createLinearGradient(0, 0, 0, BASE_H);
+    bg.addColorStop(0, "#080a12"); bg.addColorStop(0.5, "#05060a"); bg.addColorStop(1, "#030407");
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, BASE_W, BASE_H);
+
+    for (const s of stars) {
+      const a = s.a * (0.6 + 0.4 * Math.sin(t * 0.001 + s.tw));
+      ctx.fillStyle = `rgba(200,210,255,${a})`;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // displacement DECAYS toward 0 when idle → reactions drift back to
+    // MIRRORING the event once you stop clicking. Held by fresh clicks.
+    if (t - lastClick > 2500) {
+      displacement += (0 - displacement) * (1 - Math.exp(-0.25 * dt));
+    }
+    // once well past a click, let pullCenter settle onto the live centre so an
+    // abandoned nudge stops steering — slow enough that the range clearly HOLDS.
+    if (t - lastClick > 6000) {
+      pullCenter += (band.center - pullCenter) * (1 - Math.exp(-0.15 * dt));
+    }
+
+    // grey events keep arriving — BOUNDED catch-up: spawn at most a few per
+    // frame, and if still behind (should be impossible with clamped dt, but
+    // belt-and-suspenders), snap the cursor forward rather than looping.
+    let spawned = 0;
+    while (t >= nextArrive && spawned < MAX_SPAWN_PER_FRAME) {
+      spawnGrey(nextArrive); nextArrive += ARRIVE_EVERY; spawned++;
+    }
+    if (t >= nextArrive) nextArrive = t + ARRIVE_EVERY; // snap if still behind
+    // (no array-growth cap needed: events is a fixed pool, reused in place)
+
+    updateBand(t, dt);
+
+    // draw order: band (behind) → centred scale (=you) → events on top.
+    // Iterate the fixed pool; drawEvent skips inactive slots and flips a slot
+    // back to active=false when its particle finishes (returns it to the pool).
+    drawBand(t);
+    drawScale();
+    for (const ev of events) drawEvent(ev, t);
+
+    drawHUD();
+    drawHint(t);
+
+    if (!manualStep) rafId = requestAnimationFrame(frame);
+  }
+
+  // clockNow() now reads the manual sim clock (used by clicks / test hooks)
+  clockNow = () => simTime;
+
+  // PAUSE when the tab is hidden; on return, reset lastNow so no accumulated
+  // wall-clock time bursts into the sim. This is the usual background-tab fix.
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    } else if (rafId === null) {
+      lastNow = null;           // next frame computes dt from a fresh baseline
+      rafId = requestAnimationFrame(frame);
+    }
+  });
+
+  rafId = requestAnimationFrame(frame);
+
+  // ---- test hook (verification only) ---------------------------------------
+  // __nudge(level 0..1) pulls the range toward a level, like a click.
+  window.__nudge = (lv) => {
+    pullCenter += (Math.max(0.02, Math.min(0.99, lv)) - pullCenter) * 0.55;
+    displacement = Math.min(1, displacement + 0.28);
+    lastClick = clockNow(); hintFaded = true;
+  };
+  window.__band = band;
+  window.__displacement = () => displacement;
+  // verification: reaction level an event at evLv would exit at, right now
+  window.__reactionForTest = (evLv) => reactionFor(evLv);
+  window.__recentCount = () => recent.length;
+  window.__eventsCount = () => events.reduce((n, e) => n + (e.active ? 1 : 0), 0);
+  window.__poolSize = () => events.length; // fixed POOL size (never changes)
+  // verification: drive one frame with an ARBITRARY wall-clock `now`, e.g. one
+  // that jumps 30s ahead — must NOT spawn a burst (dt is clamped inside frame).
+  // manualStep suppresses the rAF reschedule so no parallel loop is created.
+  window.__forceFrame = (now) => { manualStep = true; frame(now); manualStep = false; };
+
+  // ?test=high → after 4s idle, repeatedly nudge high (headless verification).
+  // Only ever runs when location.search contains test=; bounded loop so even
+  // this path can't burst on a big time jump.
+  const testMode = new URLSearchParams(location.search).get("test");
+  if (testMode === "high") {
+    let nextN = 0;
+    const drive = (t) => {
+      if (t > 4000) {
+        let n = 0;
+        while (t >= nextN && n < 8) { window.__nudge(0.88); nextN += 300; n++; }
+        if (t >= nextN) nextN = t + 300;
+      } else nextN = 4000;
+      requestAnimationFrame(() => drive(clockNow()));
+    };
+    requestAnimationFrame(() => drive(clockNow()));
+  }
+})();
+</script>
