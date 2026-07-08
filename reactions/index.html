@@ -2,40 +2,40 @@
 <title>Диапазон реакций — ты в центре</title>
 <!--
 =============================================================================
-MENTAL MODEL — "Шкала в центре ЕСТЬ ты; реакция окрашивает событие"
+MENTAL MODEL — "Кликай по радуге: выбираешь, где встречать реальность"
 =============================================================================
 The VERTICAL rainbow scale stands in the horizontal CENTRE of the screen and
 IS the person. There is NO separate avatar, no orb, no "ты" marker — the scale
-itself is you. 0% (bottom) to 100% (top), fear/dark → love/light. Labels:
-  Страх · Апатия · Тревога · Скука · Спокойствие · Интерес · Радость · Любовь.
+itself is you. 0% (bottom) to 100% (top), fear/dark → love/light. Labels
+bottom→top: Страх · Тревога · Апатия · Скука · Спокойствие · Интерес · Радость
+· Любовь.
 
-THE FLOW (right → scale → left):
-  1. GREY events arrive from the RIGHT at some level L, flying LEFT. They carry
-     NO colour of their own — raw reality, unjudged.
-  2. They hit the scale (you) at their level L.
-  3. On impact each event EXITS to the LEFT, now COLOURED, and flies to the
-     rainbow scale to LAND with emission rays at its reaction level.
+THE CAUSAL CHAIN (this is the whole point):
+  1. CLICK ON THE RAINBOW → sets aimLevel. Only clicks that land ON the centred
+     scale strip register; clicks anywhere else on the canvas do nothing. The
+     clicked vertical position = the level you CHOOSE to meet reality at.
+     aimLevel eases toward the clicked level (smoothed ~0.8/s), so events
+     migrate there over a second or two — it does not teleport.
+  2. GREY events fly to that level. Newly-spawned grey events arrive from the
+     RIGHT clustered around aimLevel (with a small natural spread), flying LEFT.
+     They carry NO colour of their own — raw reality, unjudged.
+  3. Reactions MIRROR the event. On hitting the scale (you) each event EXITS to
+     the LEFT coloured at ~its own arrival level, flying off with landing rays.
+     The "choice" already happened at arrival (via the click), so reactions
+     simply echo the event's level — no reaction-time displacement.
+  4. The BAND (диапазон реакций) FOLLOWS the reactions. Its centre/spread are
+     derived ONLY from the smoothed mean+spread of the recent EXITING reactions
+     (the `recent` buffer). It has NO direct click-pull. So the band visibly
+     LAGS behind aimLevel — reality catching up to where you chose to meet it.
 
-DEFAULT REACTION = MIRROR THE EVENT. With NO clicking, a grey event arriving at
-level L exits coloured at ~the SAME level L — your reaction matches the event.
-So untouched, reactions simply echo events at their own levels, and the
-reaction range reflects the natural spread of incoming events.
+  Chain: click on rainbow → aimLevel → events arrive there → reactions mirror →
+  band trails the reactions up/down with lag.
 
-CLICKING SHIFTS YOUR RANGE, WHICH THEN DISPLACES REACTIONS. A click nudges your
-REACTION RANGE (диапазон реакций) up or down. The more you have clicked (a
-"displacement" weight that rises with clicks and decays when idle), the more a
-reaction is pulled toward a level drawn from WITHIN your shifted range instead
-of mirroring the event. Click high and a LOW grey event starts exiting HIGHER
-than it came in (you respond above the event); click low and it exits lower.
-The further your range sits from the event, the more the reaction is displaced.
-  reactionLevel = lerp(eventLevel, rangeSample, displacement)
-
-YOUR REACTION RANGE = a translucent band on the centred scale with three
-tracked levels средний-верх / среднее / средний-низ. It is DERIVED (smoothed)
-from the recent stream of EXITING reactions — your reactions ARE your range —
-and NUDGED by clicks. Smoothing is gradual/lagging (~0.8/s), viscous. Default
-placement is lower-middle (roughly 0–70%) with a MODERATE spread. Idle: grey
-events keep arriving and mirroring out, the range holds steady, records nicely.
+THE BAND = a translucent range on the centred scale with three tracked levels
+средний-верх / среднее / средний-низ. Default aimLevel (no clicks / idle) is
+lower-middle (~0–70%) with a MODERATE spread. Idle: grey events keep arriving
+toward the current aimLevel and mirroring out, the band holds steady, records
+nicely.
 
 Deterministic where it matters (seeded PRNG for sampling/stars, single
 performance.now clock). ONE self-contained file, inline CSS/JS, no external deps.
@@ -48,7 +48,7 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
     font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   }
   #stage { position: fixed; inset: 0; display: grid; place-items: center; }
-  canvas { display: block; cursor: crosshair; touch-action: none; }
+  canvas { display: block; cursor: default; touch-action: none; }
 </style>
 <div id="stage"><canvas id="c"></canvas></div>
 <script>
@@ -144,12 +144,16 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
   const bell = () => (rnd() + rnd() - 1);
 
   // ---- YOUR REACTION RANGE (the follower band) -----------------------------
+  // The band PURELY FOLLOWS the recent exiting reactions — no direct click-pull.
   // Default: lower-middle of the scale, moderate spread. This is what we DRAW.
   const band = { center: 0.40, half: 0.24, top: 0.64, bot: 0.16 };
-  // A separate "pull" target the user nudges via clicks; the band's mean is a
-  // blend of this pull and the recent exiting reactions → feedback the clicks
-  // steer.
-  let pullCenter = 0.40;
+
+  // aimLevel — the level INCOMING grey events aim for. A click on the rainbow
+  // sets aimTarget; aimLevel eases toward it (smoothed ~0.8/s), so events
+  // migrate to the chosen level over a second or two. Default = lower-middle.
+  const DEFAULT_AIM = 0.40;
+  let aimLevel = DEFAULT_AIM;   // smoothed — what spawns actually use
+  let aimTarget = DEFAULT_AIM;  // where the last rainbow-click asked to aim
 
   // ---- timing --------------------------------------------------------------
   const IN_MS = 4200;      // grey travel: right → scale (you)
@@ -157,11 +161,6 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
   // clockNow reads the manual sim clock; it is reassigned once the main loop's
   // simTime exists (below). Until then it returns 0.
   let clockNow = () => 0;
-
-  // displacement weight: 0 = reactions MIRROR the event's own level (default,
-  // untouched); →1 = reactions are drawn entirely from the shifted range,
-  // ignoring the event. Rises with clicks, decays back to 0 when idle.
-  let displacement = 0;
 
   // ---- events (FIXED-SIZE OBJECT POOL) -------------------------------------
   // Each grey event enters at its OWN level evLv (raw reality). phase:
@@ -175,7 +174,6 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
     active: false, born: 0, phase: "in", evLv: 0, lv: 0,
     size: 0, wobble: 0, wobbleAmp: 0, speed: 1, landT: 0,
   }));
-  const DEFAULT_CENTER = 0.40;
 
   function spawnGrey(now) {
     // find a free slot; if none, recycle the OLDEST active one (smallest born)
@@ -185,9 +183,9 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
       if (oldest === null || e.born < oldest.born) oldest = e;
     }
     if (slot === null) slot = oldest;   // pool full → overwrite oldest particle
-    // raw incoming events cluster around the CURRENT reaction range — reality
-    // mostly arrives at the level you're living on; spread a bit past the band.
-    const evLv = Math.max(0.04, Math.min(0.96, band.center + bell() * (band.half + 0.10)));
+    // incoming events aim for aimLevel — the level YOU chose to meet reality at
+    // (set by clicking the rainbow) — with a small natural spread around it.
+    const evLv = Math.max(0.04, Math.min(0.96, aimLevel + bell() * 0.14));
     slot.active = true;
     slot.born = now;
     slot.phase = "in";
@@ -200,12 +198,11 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
     slot.landT = 0;
   }
 
-  // reaction level for an event: MIRROR its own level by default, and displace
-  // toward a sample from the shifted range as `displacement` rises with clicks.
+  // reaction level for an event: PURE MIRROR — the reaction echoes the event's
+  // own arrival level (the "choice" already happened at arrival, via the click
+  // that set aimLevel). A tiny jitter keeps reactions from stacking to a line.
   function reactionFor(evLv) {
-    const rangeSample = band.center + bell() * band.half * 0.85;
-    const lv = evLv + (rangeSample - evLv) * displacement;
-    return Math.max(0.02, Math.min(0.99, lv));
+    return Math.max(0.02, Math.min(0.99, evLv + bell() * 0.02));
   }
 
   // recent exiting reactions → drives the band (feedback). Sliding window.
@@ -216,35 +213,52 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
   const ARRIVE_EVERY = 620;  // ms between grey events
   let nextArrive = 0;
 
-  // ---- interaction ---------------------------------------------------------
+  // ---- interaction — clicks ONLY on the rainbow scale ----------------------
   let lastClick = -1e9;
   let hintFaded = false;
   let dragging = false;
 
-  function canvasYToLevel(clientY) {
+  // convert a client point → BASE-coordinate {x, y}
+  function clientToBase(clientX, clientY) {
     const rect = canvas.getBoundingClientRect();
-    const y = (clientY - rect.top) / rect.height * BASE_H;
-    return Math.max(0.02, Math.min(0.99, yToLevel(y)));
+    return {
+      x: (clientX - rect.left) / rect.width * BASE_W,
+      y: (clientY - rect.top) / rect.height * BASE_H,
+    };
   }
-  function nudge(clientY, now) {
-    const target = canvasYToLevel(clientY);
-    // a click PULLS the whole range toward that level (a hint, not a paint)…
-    pullCenter += (target - pullCenter) * 0.55;
-    pullCenter = Math.max(0.08, Math.min(0.95, pullCenter));
-    // …and raises the displacement weight, so reactions stop mirroring the
-    // event and start being drawn from the shifted range.
-    displacement = Math.min(1, displacement + 0.28);
+  // is a BASE point inside the scale strip's rectangle? (with a small pad so
+  // the target is easy to hit)
+  const SCALE_PAD = 24;
+  function onScale(bx, by) {
+    return bx >= SCALE_X - SCALE_PAD && bx <= HIT_X + SCALE_PAD &&
+           by >= TOP_Y - 4 && by <= BOT_Y + 4;
+  }
+  // a click on the rainbow SETS the level events aim for (not the band)
+  function aimAt(clientX, clientY, now) {
+    const b = clientToBase(clientX, clientY);
+    if (!onScale(b.x, b.y)) return false;         // off the scale → ignore
+    aimTarget = Math.max(0.02, Math.min(0.99, yToLevel(b.y)));
     lastClick = now;
     hintFaded = true;
+    return true;
   }
   canvas.addEventListener("pointerdown", (e) => {
-    dragging = true; nudge(e.clientY, clockNow());
-    canvas.setPointerCapture(e.pointerId);
+    if (aimAt(e.clientX, e.clientY, clockNow())) {
+      dragging = true;                            // drag only if we started on the scale
+      canvas.setPointerCapture(e.pointerId);
+    }
   });
-  canvas.addEventListener("pointermove", (e) => { if (dragging) nudge(e.clientY, clockNow()); });
+  canvas.addEventListener("pointermove", (e) => {
+    if (dragging) aimAt(e.clientX, e.clientY, clockNow()); // aimAt re-checks bounds
+  });
   const endDrag = () => { dragging = false; };
   canvas.addEventListener("pointerup", endDrag);
   canvas.addEventListener("pointercancel", endDrag);
+  // crosshair only over the scale, default cursor elsewhere
+  canvas.addEventListener("pointermove", (e) => {
+    const b = clientToBase(e.clientX, e.clientY);
+    canvas.style.cursor = onScale(b.x, b.y) ? "crosshair" : "default";
+  });
 
   // ---- update the band each frame (smoothed, frame-rate-independent) -------
   function updateBand(now, dt) {
@@ -252,7 +266,9 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
     while (recent.length && now - recent[0].t > RECENT_MS) recent.shift();
     if (recent.length > MAX_RECENT) recent.splice(0, recent.length - MAX_RECENT);
 
-    // recent-reactions mean & spread (the reactions ARE the range)
+    // The band PURELY FOLLOWS the recent EXITING reactions — NO click-pull.
+    // centre = mean of recent reactions, spread = their std-dev. Since events
+    // aim at aimLevel and reactions mirror, the band trails aimLevel with lag.
     let rMean = band.center, rHalf = band.half;
     if (recent.length >= 2) {
       let s = 0, s2 = 0;
@@ -260,9 +276,7 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
       rMean = s / recent.length;
       rHalf = Math.sqrt(Math.max(0, s2 / recent.length - rMean * rMean));
     }
-    // pull weight: strong right after a click, decaying over ~2s, small floor
-    const pullW = 0.55 * Math.exp(-(now - lastClick) / 1400) + 0.12; // 0.12..0.67
-    const targetCenter = pullCenter * pullW + rMean * (1 - pullW);
+    const targetCenter = rMean;
     // spread target: moderate, clamped — never hairline, never whole scale
     const targetHalf = Math.max(0.18, Math.min(0.32, rHalf * 0.9 + 0.14));
 
@@ -513,7 +527,7 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
     ctx.font = "500 25px -apple-system, 'Segoe UI', Arial";
     ctx.fillStyle = `rgba(255,255,255,${alpha})`;
     ctx.shadowColor = "rgba(0,0,0,0.6)"; ctx.shadowBlur = 12;
-    ctx.fillText("серые события летят в тебя; кликай — сдвигай диапазон реакций, что выходит налево красишь ты",
+    ctx.fillText("кликай по радуге — выбирай, на каком уровне встречать события; диапазон подтянется за ними",
                  BASE_W / 2, BASE_H - 110);
     ctx.restore();
   }
@@ -550,16 +564,9 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
       ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
     }
 
-    // displacement DECAYS toward 0 when idle → reactions drift back to
-    // MIRRORING the event once you stop clicking. Held by fresh clicks.
-    if (t - lastClick > 2500) {
-      displacement += (0 - displacement) * (1 - Math.exp(-0.25 * dt));
-    }
-    // once well past a click, let pullCenter settle onto the live centre so an
-    // abandoned nudge stops steering — slow enough that the range clearly HOLDS.
-    if (t - lastClick > 6000) {
-      pullCenter += (band.center - pullCenter) * (1 - Math.exp(-0.15 * dt));
-    }
+    // aimLevel eases toward the last clicked level (or holds at default when
+    // untouched) — smoothed ~0.8/s so new events migrate there over ~1-2s.
+    aimLevel += (aimTarget - aimLevel) * (1 - Math.exp(-0.8 * dt));
 
     // grey events keep arriving — BOUNDED catch-up: spawn at most a few per
     // frame, and if still behind (should be impossible with clamped dt, but
@@ -603,14 +610,28 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
   rafId = requestAnimationFrame(frame);
 
   // ---- test hook (verification only) ---------------------------------------
-  // __nudge(level 0..1) pulls the range toward a level, like a click.
+  // __nudge(level 0..1) simulates a rainbow-click at that level (sets aimTarget)
   window.__nudge = (lv) => {
-    pullCenter += (Math.max(0.02, Math.min(0.99, lv)) - pullCenter) * 0.55;
-    displacement = Math.min(1, displacement + 0.28);
+    aimTarget = Math.max(0.02, Math.min(0.99, lv));
     lastClick = clockNow(); hintFaded = true;
   };
+  // simulate a raw canvas click at BASE coords (x,y) — honours the scale-rect
+  // hit-test, so an off-scale point does nothing. Returns whether it registered.
+  window.__clickBase = (bx, by) => {
+    if (!onScale(bx, by)) return false;
+    aimTarget = Math.max(0.02, Math.min(0.99, yToLevel(by)));
+    lastClick = clockNow(); hintFaded = true;
+    return true;
+  };
+  window.__scaleRect = () => ({ x0: SCALE_X, x1: HIT_X, top: TOP_Y, bot: BOT_Y, pad: SCALE_PAD });
+  window.__aim = () => ({ aimLevel, aimTarget });
   window.__band = band;
-  window.__displacement = () => displacement;
+  // mean arrival level of the grey events currently in flight (phase "in")
+  window.__eventsMean = () => {
+    let n = 0, s = 0;
+    for (const e of events) if (e.active && e.phase === "in") { n++; s += e.evLv; }
+    return n ? s / n : null;
+  };
   // verification: reaction level an event at evLv would exit at, right now
   window.__reactionForTest = (evLv) => reactionFor(evLv);
   window.__recentCount = () => recent.length;
@@ -621,7 +642,7 @@ performance.now clock). ONE self-contained file, inline CSS/JS, no external deps
   // manualStep suppresses the rAF reschedule so no parallel loop is created.
   window.__forceFrame = (now) => { manualStep = true; frame(now); manualStep = false; };
 
-  // ?test=high → after 4s idle, repeatedly nudge high (headless verification).
+  // ?test=high → after 4s idle, repeatedly aim high (headless verification).
   // Only ever runs when location.search contains test=; bounded loop so even
   // this path can't burst on a big time jump.
   const testMode = new URLSearchParams(location.search).get("test");
