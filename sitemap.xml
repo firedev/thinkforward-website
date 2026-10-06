@@ -642,6 +642,26 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/this-is-love/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/this-is-love/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/this-is-love/" />
+
+          <lastmod>2026-10-06T02:07:54-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/this-is-love/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/this-is-love/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/this-is-love/" />
+
+          <lastmod>2026-10-06T02:07:54-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/trip/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/trip/" />
@@ -657,7 +677,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-05T04:29:17-07:00</lastmod>
+          <lastmod>2026-10-06T02:08:21-07:00</lastmod>
 
 
         </url>
