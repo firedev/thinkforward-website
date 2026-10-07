@@ -642,6 +642,46 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/children/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/children/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/children/" />
+
+          <lastmod>2026-10-06T22:11:20-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/children/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/children/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/children/" />
+
+          <lastmod>2026-10-06T22:11:20-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/book/couple/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/couple/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/couple/" />
+
+          <lastmod>2026-10-06T22:11:20-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/couple/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/couple/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/couple/" />
+
+          <lastmod>2026-10-06T22:11:20-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/book/darkness/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/darkness/" />
@@ -997,7 +1037,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T22:07:40-07:00</lastmod>
+          <lastmod>2026-10-06T22:11:25-07:00</lastmod>
 
 
         </url>
