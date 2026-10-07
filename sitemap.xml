@@ -702,6 +702,26 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/mastery/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/mastery/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/mastery/" />
+
+          <lastmod>2026-10-06T21:14:29-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/mastery/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/mastery/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/mastery/" />
+
+          <lastmod>2026-10-06T21:14:29-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/book/the-heros-journey/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/the-heros-journey/" />
@@ -777,7 +797,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T21:12:29-07:00</lastmod>
+          <lastmod>2026-10-06T21:14:34-07:00</lastmod>
 
 
         </url>
