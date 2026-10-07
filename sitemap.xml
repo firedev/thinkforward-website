@@ -642,6 +642,46 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/all-is-you/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/all-is-you/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/all-is-you/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/all-is-you/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/all-is-you/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/all-is-you/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/book/body-is-a-friend/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/body-is-a-friend/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/body-is-a-friend/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/body-is-a-friend/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/body-is-a-friend/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/body-is-a-friend/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/book/children/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/children/" />
@@ -658,6 +698,26 @@
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/children/" />
 
           <lastmod>2026-10-06T22:11:20-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/book/choose-your-state/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/choose-your-state/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/choose-your-state/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/choose-your-state/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/choose-your-state/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/choose-your-state/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
 
 
         </url>
@@ -798,6 +858,26 @@
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/ikigai/" />
 
           <lastmod>2026-10-06T22:05:51-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/book/integrity/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/integrity/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/integrity/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/integrity/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/integrity/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/integrity/" />
+
+          <lastmod>2026-10-06T22:14:00-07:00</lastmod>
 
 
         </url>
@@ -1037,7 +1117,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T22:11:25-07:00</lastmod>
+          <lastmod>2026-10-06T22:14:05-07:00</lastmod>
 
 
         </url>
