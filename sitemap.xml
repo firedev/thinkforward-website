@@ -722,6 +722,46 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/ikigai/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/ikigai/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/ikigai/" />
+
+          <lastmod>2026-10-06T22:05:51-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/ikigai/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/ikigai/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/ikigai/" />
+
+          <lastmod>2026-10-06T22:05:51-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/book/its-all-the-same/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/its-all-the-same/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/its-all-the-same/" />
+
+          <lastmod>2026-10-06T22:05:51-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/its-all-the-same/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/its-all-the-same/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/its-all-the-same/" />
+
+          <lastmod>2026-10-06T22:05:51-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/book/love-life/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/love-life/" />
@@ -937,7 +977,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T22:03:42-07:00</lastmod>
+          <lastmod>2026-10-06T22:05:57-07:00</lastmod>
 
 
         </url>
