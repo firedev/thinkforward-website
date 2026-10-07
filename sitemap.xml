@@ -722,6 +722,26 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/ultimate-reality/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/ultimate-reality/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/ultimate-reality/" />
+
+          <lastmod>2026-10-06T21:10:10-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/ultimate-reality/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/ultimate-reality/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/ultimate-reality/" />
+
+          <lastmod>2026-10-06T21:10:10-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/trip/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/trip/" />
@@ -737,7 +757,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T21:08:05-07:00</lastmod>
+          <lastmod>2026-10-06T21:10:16-07:00</lastmod>
 
 
         </url>
