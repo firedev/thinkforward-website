@@ -702,6 +702,26 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/the-heros-journey/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/the-heros-journey/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/the-heros-journey/" />
+
+          <lastmod>2026-10-06T21:12:23-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/the-heros-journey/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/the-heros-journey/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/the-heros-journey/" />
+
+          <lastmod>2026-10-06T21:12:23-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/book/this-is-love/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/this-is-love/" />
@@ -757,7 +777,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T21:10:16-07:00</lastmod>
+          <lastmod>2026-10-06T21:12:29-07:00</lastmod>
 
 
         </url>
