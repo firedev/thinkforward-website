@@ -682,6 +682,26 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/eightfold-path/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/eightfold-path/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/eightfold-path/" />
+
+          <lastmod>2026-10-06T22:03:37-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/eightfold-path/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/eightfold-path/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/eightfold-path/" />
+
+          <lastmod>2026-10-06T22:03:37-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/book/goodness/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/goodness/" />
@@ -917,7 +937,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T22:02:00-07:00</lastmod>
+          <lastmod>2026-10-06T22:03:42-07:00</lastmod>
 
 
         </url>
