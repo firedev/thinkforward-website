@@ -722,6 +722,26 @@
 
         </url>
         <url>
+          <loc>https://thinkforward.academy/book/reprogram-yourself/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/reprogram-yourself/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/book/reprogram-yourself/" />
+
+          <lastmod>2026-10-06T22:00:01-07:00</lastmod>
+
+
+        </url>
+        <url>
+          <loc>https://thinkforward.academy/ru/book/reprogram-yourself/</loc>
+
+              <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/ru/book/reprogram-yourself/" />
+              <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/ru/book/reprogram-yourself/" />
+
+          <lastmod>2026-10-06T22:00:01-07:00</lastmod>
+
+
+        </url>
+        <url>
           <loc>https://thinkforward.academy/book/the-heros-journey/</loc>
 
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/book/the-heros-journey/" />
@@ -857,7 +877,7 @@
               <xhtml:link rel="alternate" hreflang="x-default" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
               <xhtml:link rel="alternate" hreflang="en" href="https://thinkforward.academy/bridgetown_quick_search/index.json" />
 
-          <lastmod>2026-10-06T21:19:29-07:00</lastmod>
+          <lastmod>2026-10-06T22:00:07-07:00</lastmod>
 
 
         </url>
