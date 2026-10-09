@@ -2653,7 +2653,7 @@
         },
         {
           "id": "ru-posts",
-          "title": "Posts",
+          "title": "Записи",
           "collection": {
             "label": "pages",
             "name": "Posts"
