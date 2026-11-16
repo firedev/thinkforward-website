@@ -1872,16 +1872,16 @@
           "content": "To have faith is to trust yourself to the water. When you swim you don’t grab hold of the water, because if you do you will sink and drown. Instead you relax, and float."
         },
         {
-          "id": "music-be-svendsen-beykoz-kundura",
-          "title": "Be Svendsen — Beykoz Kundura",
+          "id": "music",
+          "title": "Music",
           "collection": {
             "label": "music",
             "name": "Music"
           },
           "categories": "",
           "tags": "",
-          "url": "/music/be-svendsen-beykoz-kundura/",
-          "content": "Be Svendsen played this two-hour set at Beykoz Kundura in Istanbul on March 3, 2018, for the eighth edition of Generic Music’s Get Closer series. The recording was released by Generic Music the following year.\n\nBeykoz Kundura began as an Ottoman leather works in 1810 and later became the Sümerbank Leather and Shoe Factory. Production ended in 1999; the preserved industrial complex now serves as a film location and an arts centre for cinema, theatre, dance, and music."
+          "url": "/music/",
+          "content": "Sets I keep coming back to. More on my YouTube channel.\n\n\n\n\nBe Svendsen — Mount Nemrut\n\n\n\nBe Svendsen — Beykoz Kundura\n\n\n\nBen Böhmer — Cappadocia\n\n\n\nGlobal Underground 007: New York\n\n\n\nThe Hymmapan Electron\n\n\n\nNorthern Exposure\n\n\n\nParra for Cuva — Vulcano Arenal\n\n\n\nResident: Two Years of Oakenfold at Cream\n\n\n\nThe Goa Mix\n\n\n\nYOTTO — A Very Cold Sunset"
         },
         {
           "id": "music-be-svendsen-mount-nemrut",
@@ -1894,6 +1894,18 @@
           "tags": "",
           "url": "/music/be-svendsen-mount-nemrut/",
           "content": "Norwegian producer Be Svendsen (Kristian Svendsen), known for his work on Bar 25 and Iboga Records, played this set on the summit of Mount Nemrut in southeastern Türkiye on June 13, 2021, for Cercle’s video series.\n\nThe tumulus sits at roughly 2,150 meters, built by King Antiochos I of Commagene around 62 BC as his own tomb-sanctuary. The summit is ringed by toppled, headless statues — 8-9 meter figures of the king himself alongside Greek and Persian gods — with the separated stone heads now lying at their feet. UNESCO listed the site as a World Heritage Site in 1987.\n\nThe set runs just over two hours, timed to catch sunrise over the statues, and closes with Be Svendsen’s own track “Nemrut,” made for the occasion."
+        },
+        {
+          "id": "music-be-svendsen-beykoz-kundura",
+          "title": "Be Svendsen — Beykoz Kundura",
+          "collection": {
+            "label": "music",
+            "name": "Music"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/music/be-svendsen-beykoz-kundura/",
+          "content": "Be Svendsen played this two-hour set at Beykoz Kundura in Istanbul on March 3, 2018, for the eighth edition of Generic Music’s Get Closer series. The recording was released by Generic Music the following year.\n\nBeykoz Kundura began as an Ottoman leather works in 1810 and later became the Sümerbank Leather and Shoe Factory. Production ended in 1999; the preserved industrial complex now serves as a film location and an arts centre for cinema, theatre, dance, and music."
         },
         {
           "id": "music-ben-bohmer-cappadocia",
@@ -1930,18 +1942,6 @@
           "tags": "",
           "url": "/music/hymmapan-electron/",
           "content": "The Hymmapan Electron is a Thai duo built around khaen (a bamboo mouth organ) and phin (a three-string lute), the core instruments of molam — the “master singer” music tradition of Isan, Thailand’s northeastern region. They call the mashup “Isan Cyber”: century-old melodies played on traditional instruments, laid over a techno pulse.\n\nThe project started in 2019 as Khontan &amp; The Hymmapan Express, a full collective. In 2022 it narrowed down to an electronic duo — just khaen, phin, and production — and took the current name.\n\nThis session is part of Tuktuk Radio, a Bangkok channel that films DJs and live acts performing from a moving tuk-tuk, streets and traffic in the background instead of a club."
-        },
-        {
-          "id": "music",
-          "title": "Music",
-          "collection": {
-            "label": "music",
-            "name": "Music"
-          },
-          "categories": "",
-          "tags": "",
-          "url": "/music/",
-          "content": "Sets I keep coming back to. More on my YouTube channel.\n\n\n\n\nBe Svendsen — Beykoz Kundura\n\n\n\nBe Svendsen — Mount Nemrut\n\n\n\nBen Böhmer — Cappadocia\n\n\n\nGlobal Underground 007: New York\n\n\n\nThe Hymmapan Electron\n\n\n\nNorthern Exposure\n\n\n\nParra for Cuva — Vulcano Arenal\n\n\n\nResident: Two Years of Oakenfold at Cream\n\n\n\nThe Goa Mix\n\n\n\nYOTTO — A Very Cold Sunset"
         },
         {
           "id": "music-northern-exposure",
